@@ -5,16 +5,10 @@
 	<title>Selective Availability</title>
 
 	<style>
-		#map { height: 100%; }
-		#overlay {
-			position: absolute;
+		#map {
 			height: 100%;
-			width: 100%;
-			top: 0;
-			left: 0;
-			background-color: orange;
-			opacity: 0.2;
-			pointer-events: none;
+			-webkit-filter: url("#filter");
+  		filter: url("#filter");
 		}
 
 		html, body {
@@ -26,9 +20,16 @@
 </head>
 
 <body>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-filters">
+	  <defs>
+	    <filter id="filter">
+	      <feTurbulence type="fractalNoise" baseFrequency="0 0.15" numOctaves="1" result="warp" />
+	      <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="30" in="SourceGraphic" in2="warp" />
+	    </filter>
+	  </defs>
+	</svg>
+
 	<div id="map"></div>
-	<div id="overlay"></div>
-	<canvas id="canvas"></canvas>
 
 	<script src="node_modules/html2canvas/dist/html2canvas.js" charset="utf-8"></script>
 	<script
@@ -44,22 +45,7 @@
 			});
 		}
 
-		setInterval(function(){
-			html2canvas(document.getElementById('map'), {
-				useCORS: true,
-		    onrendered: function(canvas) {
-		        // canvas is the final rendered <canvas> element
-						var src = canvas.toDataURL()
-						var ctx = $('#canvas')[0].getContext('2d');
 
-						var image = new Image
-						image.src = src
-						image.onload = function(){
-						   ctx.drawImage(image, 0, 0)
-						}
-		    },
-			});
-		}, 8000)
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdLHj1k7ReQ7pI5PgM1RzauJ5DUN_wHI8&callback=initMap" async defer></script>
 	<!-- <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script> -->
