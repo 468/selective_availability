@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="UTF-8">
+
+    	<title>Selective Availability</title>
+
+    	<style>
+	      	#map {
+	        	height: 100%;
+	      	}
+
+	      	html, body {
+	        	height: 100%;
+	        	margin: 0;
+	        	padding: 0;
+	      	}
+    	</style>
+
+  	</head>
+
+	<body>
+
+
+
+		<!--<div id="map">
+
+			
+		</div>
+		!-->
+
+	
+	<script src="lib/three.min.js"></script>
+	<script src="lib/OrbitControls.js"></script>
+	<script src="lib/THREE.Terrain.min.js"></script>
+
+		<script>
+
+		var scene = new THREE.Scene();
+		var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+		        camera.position.set(900,300,0);
+				camera.up = new THREE.Vector3(0,1,0);
+				camera.lookAt(new THREE.Vector3(0,0,0));
+
+		var renderer = new THREE.WebGLRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+		var controls;
+		controls = new THREE.OrbitControls( camera );
+		controls.addEventListener( 'change', renderer );
+		//controls.autoRotate = true;
+
+		//THREE.ImageUtils.loadTexture()
+
+		var texture = new THREE.TextureLoader().load( "staticmap.png" );
+
+			// Generate a terrain
+			var xS = 103, yS = 103;
+			terrainScene = THREE.Terrain({
+			    easing: THREE.Terrain.Linear,
+			    frequency: 2.5,
+			    heightmap: THREE.Terrain.DiamondSquare,
+			    material: new THREE.MeshBasicMaterial({map: texture}),
+			    maxHeight: 80,
+			    minHeight: -80,
+			    steps: 1,
+			    useBufferGeometry: true,
+			    xSegments: xS,
+			    xSize: 512,
+			    ySegments: yS,
+			    ySize: 512,
+			});
+			// Assuming you already have your global scene, add the terrain to it
+			scene.add(terrainScene);
+
+			
+
+
+			function animate() {
+				requestAnimationFrame( animate );
+				renderer.render( scene, camera );
+				controls.update();
+
+			}
+			animate();
+
+		</script>
+<img id="map_image" src="https://maps.googleapis.com/maps/api/staticmap?center=47.5952,-122.3316&zoom=16&size=512x512&path=weight:3%7Ccolor:blue%7Cenc:{coaHnetiVjM??_SkM??~R&key=AIzaSyAHxDSqcuWzcgs3GXwL3pS3YDMbBSiyV8k" />
+	</body>
+
+</html>
