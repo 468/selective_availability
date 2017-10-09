@@ -6,7 +6,13 @@
 
 	<style>
 		#map {
-			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			margin-left: -6vw;
+			margin-top: -6vh;
+			width: 112vw;
+			height:112vh;
 			/*-webkit-filter: url("#filter");*/
   		filter: url("#filter");
 		}
@@ -15,6 +21,7 @@
 			height: 100%;
 			margin: 0;
 			padding: 0;
+			position: relative;
 		}
 
 		.filter {
@@ -37,7 +44,7 @@
 				<stop offset="100%" stop-color="red" stop-opacity="0"></stop>
 			</radialGradient>
 			<g id="rectangle">
-				<rect id="point" x="400" y="400" width="600" height="600" fill="url(#radialgrad)">
+				<rect id="point" x="400" y="400" width="800" height="800" fill="url(#radialgrad)">
 					<animate attributeType="CSS" attributeName="opacity"
 		           from="0" to="1" dur="4" repeatCount="1" />
 				</rect>
@@ -309,9 +316,14 @@
 			 yprediction = data.y; //these y coordinates are relative to the viewport
 		}).begin();
 
+		window.onbeforeunload = function() {
+			// webgazer.end()
+			window.localstorage.clear()
+		}
+
 		setInterval(function(){
-			point.setAttribute("x", xprediction)
-			point.setAttribute("y", yprediction)
+			point.setAttribute("x", xprediction - 600/2)
+			point.setAttribute("y", yprediction - 600/2)
 		}, 100)
 
 		function setup() {
