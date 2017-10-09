@@ -26,28 +26,26 @@
 <body>
 
 	<!-- http://vanseodesign.com/web-design/svg-filter-primitives-fedisplacementmap/ -->
-	<!-- <div id="map"></div> -->
-
-	<img class="filter" src="grid.png" alt="">
+	<div id="map"></div>
+	<!-- <img class="filter" src="grid.png" alt=""> -->
 
 	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-filters">
 	  <defs>
 			<radialGradient id="radialgrad">
-				<stop offset="20%" stop-color="white" />
-				<stop offset="60%" stop-color="white" stop-opacity="0.2" />
-				<stop offset="100%" stop-color="red" stop-opacity="0"/>
+				<stop offset="20%" stop-color="white"></stop>
+				<stop offset="60%" stop-color="white" stop-opacity="0.2"></stop>
+				<stop offset="100%" stop-color="red" stop-opacity="0"></stop>
 			</radialGradient>
 			<g id="rectangle">
-				<!-- <rect x="0" y="0" width="1000" height="1000" opacity="0"/> -->
-				<rect id="point" x="400" y="400" width="600" height="600" fill="url(#radialgrad)"/>
+				<rect id="point" x="400" y="400" width="600" height="600" fill="url(#radialgrad)">
+					<animate attributeType="CSS" attributeName="opacity"
+		           from="0" to="1" dur="4" repeatCount="1" />
+				</rect>
 			</g>
-
 	    <filter id="filter">
-	      <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1" result="warp" />
+	      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" result="warp" />
 				<feImage xlink:href="#rectangle" result="radialgrad"/>
-
 				<feBlend in="radialgrad" in2="warp" mode="normal" result="combined"/>
-
 	      <feDisplacementMap scale="80" in="SourceGraphic" in2="combined" xChannelSelector="G" yChannelSelector="G" />
 	    </filter>
 	  </defs>
@@ -56,24 +54,274 @@
 
 
 	<script src="node_modules/html2canvas/dist/html2canvas.js" charset="utf-8"></script>
+	<script src="webgazer.js" charset="utf-8"></script>
 	<script>
 		var map;
 		function initMap() {
 			map = new google.maps.Map(document.getElementById('map'), {
 				center: {lat: 51.513085, lng: -0.2287173},
-				zoom: 14
+				zoom: 14,
+				styles: [
+							  {
+							    "elementType": "geometry",
+							    "stylers": [
+							      {
+							        "color": "#1d2c4d"
+							      }
+							    ]
+							  },
+							  {
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#8ec3b9"
+							      }
+							    ]
+							  },
+							  {
+							    "elementType": "labels.text.stroke",
+							    "stylers": [
+							      {
+							        "color": "#1a3646"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "administrative.country",
+							    "elementType": "geometry.stroke",
+							    "stylers": [
+							      {
+							        "color": "#4b6878"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "administrative.land_parcel",
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#64779e"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "administrative.province",
+							    "elementType": "geometry.stroke",
+							    "stylers": [
+							      {
+							        "color": "#4b6878"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "landscape.man_made",
+							    "elementType": "geometry.stroke",
+							    "stylers": [
+							      {
+							        "color": "#334e87"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "landscape.natural",
+							    "elementType": "geometry",
+							    "stylers": [
+							      {
+							        "color": "#023e58"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "poi",
+							    "elementType": "geometry",
+							    "stylers": [
+							      {
+							        "color": "#283d6a"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "poi",
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#6f9ba5"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "poi",
+							    "elementType": "labels.text.stroke",
+							    "stylers": [
+							      {
+							        "color": "#1d2c4d"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "poi.park",
+							    "elementType": "geometry.fill",
+							    "stylers": [
+							      {
+							        "color": "#023e58"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "poi.park",
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#3C7680"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "road",
+							    "elementType": "geometry",
+							    "stylers": [
+							      {
+							        "color": "#304a7d"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "road",
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#98a5be"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "road",
+							    "elementType": "labels.text.stroke",
+							    "stylers": [
+							      {
+							        "color": "#1d2c4d"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "road.highway",
+							    "elementType": "geometry",
+							    "stylers": [
+							      {
+							        "color": "#2c6675"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "road.highway",
+							    "elementType": "geometry.stroke",
+							    "stylers": [
+							      {
+							        "color": "#255763"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "road.highway",
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#b0d5ce"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "road.highway",
+							    "elementType": "labels.text.stroke",
+							    "stylers": [
+							      {
+							        "color": "#023e58"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "transit",
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#98a5be"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "transit",
+							    "elementType": "labels.text.stroke",
+							    "stylers": [
+							      {
+							        "color": "#1d2c4d"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "transit.line",
+							    "elementType": "geometry.fill",
+							    "stylers": [
+							      {
+							        "color": "#283d6a"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "transit.station",
+							    "elementType": "geometry",
+							    "stylers": [
+							      {
+							        "color": "#3a4762"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "water",
+							    "elementType": "geometry",
+							    "stylers": [
+							      {
+							        "color": "#0e1626"
+							      }
+							    ]
+							  },
+							  {
+							    "featureType": "water",
+							    "elementType": "labels.text.fill",
+							    "stylers": [
+							      {
+							        "color": "#4e6d70"
+							      }
+							    ]
+							  }
+							]
 			});
 		}
 
-		console.log(document.querySelector('#point'))
+		var xprediction = 50;
+		var yprediction = 50;
+		let point = document.querySelector('#point')
+
+		webgazer.setGazeListener(function(data, elapsedTime) {
+				if (data == null) {
+						return;
+				}
+			 xprediction = data.x; //these x coordinates are relative to the viewport
+			 yprediction = data.y; //these y coordinates are relative to the viewport
+		}).begin();
+
 		setInterval(function(){
-			let point = document.querySelector('#point')
-			point.setAttribute("x", parseInt(point.getAttribute("x")) + 6)
+			point.setAttribute("x", xprediction)
+			point.setAttribute("y", yprediction)
 		}, 100)
+
+		function setup() {
+
+		}
 
 
 	</script>
-	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdLHj1k7ReQ7pI5PgM1RzauJ5DUN_wHI8&callback=initMap" async defer></script> -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdLHj1k7ReQ7pI5PgM1RzauJ5DUN_wHI8&callback=initMap" async defer></script>
+
 	<!-- <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script> -->
 </body>
 </html>
