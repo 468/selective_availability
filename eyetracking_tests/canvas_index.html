@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="UTF-8">
+
+    	<title>Selective Availability</title>
+
+    	<style>
+	      	html, body { 
+            height: 100%; padding: 0; margin: 0; 
+          }
+
+          #eyetracker_debug_dot{
+            width:10px;
+            height:10px;
+            position:absolute;
+            background-color: red;
+          }
+
+          #bottommap{
+             /* filter: url("#filter"); */
+             /*-webkit-filter: url("#filter");*/
+             position:absolute;
+             top:0;
+             left:0;
+          }
+
+
+          #topmap{
+             /*-webkit-filter: url("#filter");*/
+             position:absolute;
+             top:0;
+             left:0;
+             z-index:10;
+             filter: url("#filter"); 
+          }
+
+      
+
+  
+    	</style>
+
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet' />
+
+  	</head>
+
+  <body>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-filters">
+    <defs>
+      <filter id="filter" >
+       
+        <feTurbulence type="fractalNoise" baseFrequency="0.15 0.15" numOctaves="1" result="warp" />
+        <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="20" in="SourceGraphic" in2="warp" />
+      </filter>
+    </defs>
+  </svg>
+
+
+
+  
+
+  <div id='bottommap' style='width: 100%; height: 100%;'></div>
+  <div id='topmap' style='width: 100%; height: 100%;'></div>
+  
+  <script src="jquery-3.2.1.min.js" type="text/javascript"></script>
+  <script src="webgazer.js" type="text/javascript"></script>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHRheWxvcjIiLCJhIjoiY2o4azA3dHZnMDd0cTJ3cG13amZsdDB5YSJ9.q19xHrjc4Xlt4cMw1OAZ9w';
+    var map = new mapboxgl.Map({
+    container: 'bottommap',
+    style: 'mapbox://styles/alextaylor2/cj8k19wkb4k6x2rnr2zm4xsjg',
+    zoom: 15, // starting zoom
+    center: [-0.2308067, 51.513091] // starting position [lng, lat]
+    });
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleHRheWxvcjIiLCJhIjoiY2o4azA3dHZnMDd0cTJ3cG13amZsdDB5YSJ9.q19xHrjc4Xlt4cMw1OAZ9w';
+    var map2 = new mapboxgl.Map({
+    container: 'topmap',
+    style: 'mapbox://styles/alextaylor2/cj8k19wkb4k6x2rnr2zm4xsjg',
+    zoom: 15, // starting zoom
+    center: [-0.2308067, 51.513091] // starting position [lng, lat]
+    });
+
+    //find mapboxgl-canvas class within topcanvas element
+
+
+  
+
+  
+
+  var overlay = document.createElement('canvas');
+  overlay.id = 'overlay';
+  overlay.style.position = 'absolute';
+  overlay.width = screen.width;
+  overlay.height = screen.height;
+  overlay.style.zIndex = "10";
+  overlay.style.top = "0px";
+  overlay.style.left = "0px";
+  overlay.style.margin = '0px';
+  document.body.appendChild(overlay);
+
+
+  </script>
+
+ <script>
+
+ 
+
+
+  $( document ).ready(function() {
+
+     var xprediction;
+     var yprediction;
+     webgazer.setTracker("clmtrackr");
+     webgazer.setRegression("ridge");
+
+     webgazer.setGazeListener(function(data, elapsedTime) {
+         if (data == null) {
+             return;
+         }
+          xprediction = data.x; //these x coordinates are relative to the viewport 
+          yprediction = data.y; //these y coordinates are relative to the viewport
+         //console.log(elapsedTime); //elapsed time is based on time since begin was called
+     }).begin();
+
+
+    // var cl = webgazer.getTracker().clm;
+
+      
+
+
+      function drawLoop() {
+        requestAnimFrame(drawLoop);
+           //xprediction
+          // yprediction
+        }
+        
+      drawLoop();
+
+       /*
+       @inproceedings{papoutsaki2016webgazer,
+       author = {Alexandra Papoutsaki and Patsorn Sangkloy and James Laskey and Nediyana Daskalova and Jeff Huang and James Hays},
+       title = {WebGazer: Scalable Webcam Eye Tracking Using User Interactions},
+       booktitle = {Proceedings of the 25th International Joint Conference on Artificial Intelligence (IJCAI)},
+       pages = {3839--3845},
+       year = {2016},
+       organization={AAAI}
+       }
+       */
+
+    //var targetcanvas = $('#topmap').find('.mapboxgl-canvas')
+    //$(targetcanvas)[0].getContext('2d').clearRect(xprediction, yprediction, 32, 32);
+    var canvas = $('canvas').get(1)
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'rgba(0,200,0,0.7)';
+    ctx.fillRect(0,0,100,75);
+    console.log(ctx); // CanvasRenderingContext2D { ... }
+    console.log(canvas)
+
+
+    
+
+
+  });
+
+
+
+ </script>
+
+
+  </body>
+
+</html>
