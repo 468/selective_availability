@@ -24,18 +24,80 @@
 		<div id="map"></div>
 
 		<script>
-		    var map;
-		    function initMap() {
-		    	map = new google.maps.Map(document.getElementById('map'), {
-		        center: {lat: 51.513085, lng: -0.2287173},
-		        zoom: 14
-		    	});
-		    }
-		</script>
+   
+      var map, infoWindow;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18
+        });
+        infoWindow = new google.maps.InfoWindow;
 
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdLHj1k7ReQ7pI5PgM1RzauJ5DUN_wHI8&callback=initMap" async defer></script>
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
 
-		<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script> 
+          	
+            map.setCenter(pos);
+
+
+            marker = new google.maps.Marker({
+          		map: map,
+          		draggable: false,
+          		animation: google.maps.Animation.DROP,
+          		position: {lat: pos.lat, lng: pos.lng}
+        	});
+
+        	
+
+        	setInterval( function(){ 
+        		var num = Math.floor(Math.random()*20) + 1; // this will get a number between 1 and 20;
+				num *= 0.000025
+				if(Math.floor(Math.random()*2)){
+					randomlat = pos.lat - num
+				}else{
+					randomlat = pos.lat + num
+				}
+
+				if(Math.floor(Math.random()*2)){
+        	    	randomlng = pos.lng - num
+				}else{
+					randomlng = pos.lng + num
+
+				}
+        	 
+        	    marker.setPosition( new google.maps.LatLng( randomlat, randomlng ) );
+        	    map.panTo( new google.maps.LatLng( randomlat, randomlng ) );
+        	        
+        	}, 1000);
+
+
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+      }
+    </script>
+
+
+
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdLHj1k7ReQ7pI5PgM1RzauJ5DUN_wHI8&callback=initMap"></script>
+
+
 
 	</body>
 
